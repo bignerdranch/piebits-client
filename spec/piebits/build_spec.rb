@@ -8,7 +8,7 @@ describe Build do
   let(:ci_build_url) { 'http://foo.bar' }
   
   it "converts itself into a hash" do
-    build = described_class.new(timestamp, commit_sha, ci_build_url)
+    build = described_class.new(timestamp: timestamp, commit_sha: commit_sha, ci_build_url: ci_build_url)
     expect(build.timestamp).to eq(timestamp)
     expect(build.commit_sha).to eq(commit_sha)
     expect(build.ci_build_url).to eq(ci_build_url)
@@ -27,6 +27,12 @@ describe Build do
     build.add_report(report2)
     hash = build.to_hash
     expect(hash[:reports]).to eq([report1.to_hash, report2.to_hash])
+  end
+  
+  it "doesn't like reports which can't be converted to a hash" do
+    build = described_class.new(timestamp: timestamp, commit_sha: commit_sha, ci_build_url: ci_build_url)
+    
+    expect { build.add_report(2255) }.to raise_error("Reports must respond to to_hash")
   end
   
 end

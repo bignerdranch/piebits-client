@@ -6,7 +6,7 @@ module Piebits
     attr_reader :reports
     attr_reader :ci_build_url
     
-    def initialize(timestamp, commit_sha, ci_build_url)
+    def initialize(timestamp:, commit_sha:, ci_build_url:)
       @timestamp = timestamp
       @commit_sha = commit_sha
       @ci_build_url = ci_build_url
@@ -14,6 +14,7 @@ module Piebits
     end
     
     def add_report(report)
+      fail "Reports must respond to to_hash" unless report.respond_to?(:to_hash)
       @reports << report
     end
     
