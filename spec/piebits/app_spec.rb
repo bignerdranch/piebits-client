@@ -20,10 +20,14 @@ describe Piebits::App do
       'PIEBITS_API_TOKEN' => '123abc'
     }
     expected_json = "{\"timestamp\":null,\"commit_sha\":\"abc123\",\"ci_build_url\":null,\"reports\":[{\"category\":\"analysis\",\"tool_name\":\"oclint\",\"tool_version\":null,\"data\":\"fake oclint json\"}]}"
+    expected_headers = { 
+      'Content-Type' => 'application/json',
+      'Authorization' => "Token token=\"#{env['PIEBITS_API_TOKEN']}\""
+    }
 
     # stub out our expected request with a success response
     stubs = Faraday::Adapter::Test::Stubs.new do |stub|
-      stub.post('/api/builds', expected_json, { 'Content-Type' => 'application/json' }) { |env| [ 200, {}, '' ] }
+      stub.post('/api/builds', expected_json, expected_headers) { |env| [ 200, {}, '' ] }
     end
     # create a test faraday using our stubs
     test_faraday = Faraday.new do |builder|

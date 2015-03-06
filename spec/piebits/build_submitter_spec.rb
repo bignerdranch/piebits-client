@@ -12,23 +12,27 @@ describe Piebits::BuildSubmitter do
   }
   
   it "can be initialized with a build" do
-    submitter = described_class.new(build: build, faraday: nil)
+    submitter = described_class.new(api_token: nil, build: build, faraday: nil)
     expect(submitter.build).to eq(build)
   end
   
   it "can submit a build successfully" do
+    token = "abc123"
     expected_json_body = JSON.generate(build.to_hash)
-    
+    expected_headers = { 
+      'Content-Type' => 'application/json',
+      'Authorization' => "Token token=\"#{token}\""
+    }
     # stub out our expected request with a success response
     stubs = Faraday::Adapter::Test::Stubs.new do |stub|
-      stub.post('/api/builds', expected_json_body, { 'Content-Type' => 'application/json' }) { |env| [ 200, {}, '' ] }
+      stub.post('/api/builds', expected_json_body, expected_headers) { |env| [ 200, {}, '' ] }
     end
     # create a test faraday using our stubs
     test_faraday = Faraday.new do |builder|
       builder.adapter :test, stubs
     end
     
-    submitter = described_class.new(build: build, faraday: test_faraday)
+    submitter = described_class.new(api_token: token, build: build, faraday: test_faraday)
     response = submitter.submit_build
     expect(response).to_not be_nil
     expect(response.success?).to be(true)

@@ -45,7 +45,7 @@ module Piebits
       # generate a build
       build = build_generator.generate_build
       # submit the build to the service
-      submitter = BuildSubmitter.new(build: build, faraday: @faraday)
+      submitter = BuildSubmitter.new(api_token: api_token, build: build, faraday: @faraday)
       response = submitter.submit_build
       if response.success?
         @output_io.puts "Build submitted successfully."

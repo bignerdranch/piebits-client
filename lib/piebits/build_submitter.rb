@@ -7,7 +7,8 @@ module Piebits
     
     BUILDS_ENDPOINT = '/api/builds'
     
-    def initialize(build:, faraday:)
+    def initialize(api_token:, build:, faraday:)
+      @api_token = api_token
       @build = build
       @faraday = faraday
     end
@@ -16,6 +17,7 @@ module Piebits
       @faraday.post do |req|
         req.url BUILDS_ENDPOINT
         req.headers['Content-Type'] = 'application/json'
+        req.headers['Authorization'] = "Token token=\"#{@api_token}\""
         req.body = JSON.generate(build.to_hash)
       end
     end
