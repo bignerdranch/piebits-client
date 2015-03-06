@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-include Piebits
-
-describe Build do
+describe Piebits::Build do
   let(:timestamp) { 12345 }
   let(:commit_sha) { 'abc123' }
   let(:ci_build_url) { 'http://foo.bar' }

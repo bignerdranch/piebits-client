@@ -1,0 +1,5 @@
+reports:
+  -
+    tool_name: oclint
+    category: analysis
+    report_filename: oclint-output.json
