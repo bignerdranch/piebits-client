@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'faraday'
 
 describe Piebits::App do
+  let(:error_string_io) { StringIO.new }
+  let(:output_string_io) { StringIO.new }
   
   it "can be initialized" do
     app = described_class.new(environment: ENV, arguments: ARGV)
@@ -12,11 +14,10 @@ describe Piebits::App do
   
   it "can run and submit a build successfully" do
     fixture_dir = File.join(__dir__, "../fixtures")
-    output_string_io = StringIO.new
-    error_string_io = StringIO.new
     env = {
       'PWD' => fixture_dir,
-      'TRAVIS_COMMIT' => 'abc123'
+      'TRAVIS_COMMIT' => 'abc123',
+      'PIEBITS_API_TOKEN' => '123abc'
     }
     expected_json = "{\"timestamp\":null,\"commit_sha\":\"abc123\",\"ci_build_url\":null,\"reports\":[{\"category\":\"analysis\",\"tool_name\":\"oclint\",\"tool_version\":null,\"data\":\"fake oclint json\"}]}"
 
@@ -38,5 +39,18 @@ describe Piebits::App do
     expect(error_string_io.string).to eq("")
     # ensure that we got called
     stubs.verify_stubbed_calls
+  end
+  
+  it "fails if there is no Piebits API Token in the environment" do
+    app = described_class.new(environment: {}, arguments: [], error_io: error_string_io)
+    exit_code = app.run
+    
+    expect(exit_code).to eq(1)
+    expect(error_string_io.string).to eq("Please specify your API token in PIEBITS_API_TOKEN\n")
+  end
+  
+  it "reports an error if the build submission returns an error" do
+    pending
+    fail
   end
 end
