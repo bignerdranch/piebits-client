@@ -14,7 +14,8 @@ module Piebits
         input_io:STDIN, output_io:STDOUT, error_io:STDERR)
       @environment = environment
       @working_dir = environment['PWD'] # TODO: allow override with an argument
-      @faraday = faraday || Faraday.new(PIEBITS_URL)
+      url = environment['PIEBITS_URL'] || PIEBITS_URL
+      @faraday = faraday || Faraday.new(url)
       @config_filename = config_filename
       @arguments = arguments
       @input_io = input_io
