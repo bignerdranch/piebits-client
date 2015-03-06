@@ -5,7 +5,7 @@ module Piebits
     attr_reader :working_dir
     attr_reader :configuration
     
-    def initialize(environment, working_dir, config_filename)
+    def initialize(environment:, working_dir:, config_filename:)
       @environment = environment
       @working_dir = working_dir
       config_hash = YAML.safe_load(IO.read(config_filename))
