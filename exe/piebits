@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
 require "piebits"
+
+Piebits::App.new(environment: ENV, arguments: ARGV).run

@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Piebits
   
   class BuildGenerator
