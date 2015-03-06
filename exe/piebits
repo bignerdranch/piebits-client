@@ -2,4 +2,4 @@
 
 require "piebits"
 
-Piebits::App.new(environment: ENV, arguments: ARGV).run
+exit Piebits::App.new(environment: ENV, arguments: ARGV).run
