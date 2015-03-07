@@ -15,17 +15,17 @@ describe Piebits::BuildGenerator do
   let(:config_filename) {
     File.join(working_dir, "config-with-oclint.yml")
   }
-  
+
   it "can be initialized with environment and configuration filename" do
     build_generator = described_class.new(environment:environment, working_dir:working_dir, config_filename:config_filename)
     expect(build_generator.environment).to eq(environment)
     expect(build_generator.configuration).to eql(Piebits::Configuration.new(YAML.safe_load(IO.read(config_filename))))
   end
-  
+
   it "can generate a build" do
     build_generator = described_class.new(environment:environment, working_dir:working_dir, config_filename:config_filename)
     build = build_generator.generate_build
-    
+
     expected_build_hash = {
       timestamp: nil, # TODO
       commit_sha: environment["TRAVIS_COMMIT"],
