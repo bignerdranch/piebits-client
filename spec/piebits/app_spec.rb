@@ -19,8 +19,8 @@ describe Piebits::App do
       'TRAVIS_COMMIT' => 'abc123',
       'PIEBITS_API_TOKEN' => '123abc'
     }
-    expected_json = "{\"timestamp\":null,\"commit_sha\":\"abc123\",\"ci_build_url\":null,\"reports\":[{\"category\":\"analysis\",\"tool_name\":\"oclint\",\"tool_version\":null,\"data\":\"fake oclint json\"}]}"
-    expected_headers = { 
+    expected_json = "{\"build\":{\"timestamp\":null,\"commit_sha\":\"abc123\",\"ci_build_url\":null,\"reports\":[{\"category\":\"analysis\",\"tool_name\":\"oclint\",\"tool_version\":null,\"data\":\"fake oclint json\"}]}}"
+    expected_headers = {
       'Content-Type' => 'application/json',
       'Authorization' => "Token token=\"#{env['PIEBITS_API_TOKEN']}\""
     }

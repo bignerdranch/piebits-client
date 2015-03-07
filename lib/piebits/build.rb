@@ -20,10 +20,12 @@ module Piebits
 
     def to_hash
       {
-        :timestamp => timestamp,
-        :commit_sha => commit_sha,
-        :ci_build_url => ci_build_url,
-        :reports => reports.map(&:to_hash)
+        build: {
+          timestamp: timestamp,
+          commit_sha: commit_sha,
+          ci_build_url: ci_build_url,
+          reports: reports.map(&:to_hash)
+        }
       }
     end
   end

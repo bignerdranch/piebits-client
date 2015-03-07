@@ -27,17 +27,19 @@ describe Piebits::BuildGenerator do
     build = build_generator.generate_build
 
     expected_build_hash = {
-      timestamp: nil, # TODO
-      commit_sha: environment["TRAVIS_COMMIT"],
-      ci_build_url: nil, # TODO
-      reports: [
-        {
-          tool_name: "oclint",
-          tool_version: nil, # TODO?
-          category: "analysis",
-          data: "fake oclint json" 
-        }
-      ]
+      build: {
+        timestamp: nil, # TODO
+        commit_sha: environment["TRAVIS_COMMIT"],
+        ci_build_url: nil, # TODO
+        reports: [
+          {
+            tool_name: "oclint",
+            tool_version: nil, # TODO?
+            category: "analysis",
+            data: "fake oclint json"
+          }
+        ]
+      }
     }
     # :commit_sha
     expect(build.commit_sha).to eq(environment["TRAVIS_COMMIT"])
