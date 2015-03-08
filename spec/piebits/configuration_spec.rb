@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe Piebits::Configuration do
+RSpec.describe Piebits::Configuration do
   
   it "loads a basic config" do
     yaml_content = IO.read(File.join(__dir__, "../fixtures/config-with-oclint.yml"))

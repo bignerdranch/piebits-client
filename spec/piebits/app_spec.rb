@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'faraday'
 
-describe Piebits::App do
+RSpec.describe Piebits::App do
   let(:error_string_io) { StringIO.new }
   let(:output_string_io) { StringIO.new }
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'faraday'
 require 'json'
 
-describe Piebits::BuildSubmitter do
+RSpec.describe Piebits::BuildSubmitter do
   
   let(:build) {
     build = Piebits::Build.new(timestamp: 13245, commit_sha: 'abc123', ci_build_url: 'http://foo.bar')

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Piebits::BuildGenerator do
+RSpec.describe Piebits::BuildGenerator do
   let(:environment) {
     {
       "TRAVIS_BUILD_ID" => "12351325",
