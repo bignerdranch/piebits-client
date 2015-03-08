@@ -14,7 +14,7 @@ RSpec.describe Piebits::App do
 
   it "can run and submit a build successfully" do
     fixture_dir = File.join(__dir__, "../fixtures")
-    env = {
+    fake_env = {
       'PWD' => fixture_dir,
       'TRAVIS_COMMIT' => 'abc123',
       'PIEBITS_API_TOKEN' => '123abc'
@@ -22,7 +22,7 @@ RSpec.describe Piebits::App do
     expected_json = "{\"build\":{\"timestamp\":null,\"commit_sha\":\"abc123\",\"ci_build_url\":null,\"reports\":[{\"category\":\"analysis\",\"tool_name\":\"oclint\",\"tool_version\":null,\"data\":\"fake oclint json\"}]}}"
     expected_headers = {
       'Content-Type' => 'application/json',
-      'Authorization' => "Token token=\"#{env['PIEBITS_API_TOKEN']}\""
+      'Authorization' => "Token token=\"#{fake_env['PIEBITS_API_TOKEN']}\""
     }
 
     # stub out our expected request with a success response
@@ -34,7 +34,7 @@ RSpec.describe Piebits::App do
       builder.adapter :test, stubs
     end
 
-    app = described_class.new(environment: env, arguments: [], faraday: test_faraday,
+    app = described_class.new(environment: fake_env, arguments: [], faraday: test_faraday,
       config_filename: 'config-with-oclint.yml', output_io: output_string_io, error_io: error_string_io)
     exit_code = app.run
 
